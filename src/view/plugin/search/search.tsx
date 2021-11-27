@@ -111,7 +111,7 @@ export class Search extends PluginBaseComponent<
           )
         }
       >
-        <span style="padding-right: 2px;">
+        <span style="padding-right: 10px;">
           Search:
         </span>
 
