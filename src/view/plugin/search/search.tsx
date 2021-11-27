@@ -102,8 +102,19 @@ export class Search extends PluginBaseComponent<
 
     return (
       <div
-        className={className(classJoin('search', this.config.className.search))}
+        className={
+          className(
+            classJoin(
+              'search',
+              this.config.className.search
+            )
+          )
+        }
       >
+        <span style="padding-right: 2px;">
+          Search:
+        </span>
+
         <input
           type="search"
           placeholder={this._('search.placeholder')}
@@ -112,6 +123,7 @@ export class Search extends PluginBaseComponent<
           className={classJoin(
             className('input'),
             className('search', 'input'),
+            this.config.className.searchInput
           )}
           value={this.store.state.keyword}
         />

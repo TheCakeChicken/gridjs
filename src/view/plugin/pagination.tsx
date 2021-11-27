@@ -160,35 +160,37 @@ export class Pagination extends PluginBaseComponent<
       <Fragment>
         {this.pages > maxCount && this.state.page - pagePivot > 0 && (
           <Fragment>
-            <button
-              tabIndex={0}
-              role="button"
-              onClick={this.setPage.bind(this, 0)}
-              title={this._('pagination.firstPage')}
-              aria-label={this._('pagination.firstPage')}
-              className={this.config.className.paginationButton}
+            <li
+              className="page-item"
             >
-              {this._('1')}
-            </button>
-            <button
+              <a
+                tabIndex={0}
+                onClick={this.setPage.bind(this, 0)}
+                title={this._('pagination.firstPage')}
+                aria-label={this._('pagination.firstPage')}
+                href="javascript:void(0)"
+                className={this.config.className.paginationButton}
+              >
+                {this._('1')}
+              </a>
+            </li>
+
+            <li
               tabIndex={-1}
               className={classJoin(
                 className('spread'),
-                this.config.className.paginationButton,
+                "text-muted",
               )}
             >
               ...
-            </button>
+            </li>
           </Fragment>
         )}
 
         {Array.from(Array(maxCount).keys())
           .map((i) => this.state.page + (i - pagePivot))
           .map((i) => (
-            <button
-              tabIndex={0}
-              role="button"
-              onClick={this.setPage.bind(this, i)}
+            <li
               className={classJoin(
                 this.state.page === i
                   ? classJoin(
@@ -196,36 +198,51 @@ export class Pagination extends PluginBaseComponent<
                       this.config.className.paginationButtonCurrent,
                     )
                   : null,
-                this.config.className.paginationButton,
+                "page-item",
               )}
-              title={this._('pagination.page', i + 1)}
-              aria-label={this._('pagination.page', i + 1)}
             >
-              {this._(`${i + 1}`)}
-            </button>
+              <a
+                tabIndex={0}
+                onClick={this.setPage.bind(this, i)}
+                className={
+                  this.config.className.paginationButton
+                }
+                href="javascript:void(0)"
+                title={this._('pagination.page', i + 1)}
+                aria-label={this._('pagination.page', i + 1)}
+              >
+                {this._(`${i + 1}`)}
+              </a>
+            </li>
+
           ))}
 
         {this.pages > maxCount && this.pages > this.state.page + pagePivot + 1 && (
           <Fragment>
-            <button
+            <li
               tabIndex={-1}
               className={classJoin(
                 className('spread'),
-                this.config.className.paginationButton,
+                "text-muted",
               )}
             >
               ...
-            </button>
-            <button
-              tabIndex={0}
-              role="button"
-              onClick={this.setPage.bind(this, this.pages - 1)}
-              title={this._('pagination.page', this.pages)}
-              aria-label={this._('pagination.page', this.pages)}
-              className={this.config.className.paginationButton}
+            </li>
+
+            <li
+              className="page-item"
             >
-              {this._(`${this.pages}`)}
-            </button>
+              <a
+                tabIndex={0}
+                onClick={this.setPage.bind(this, this.pages - 1)}
+                title={this._('pagination.page', this.pages)}
+                aria-label={this._('pagination.page', this.pages)}
+                href="javascript:void(0)"
+                className={this.config.className.paginationButton}
+              >
+                {this._(`${this.pages}`)}
+              </a>
+            </li>
           </Fragment>
         )}
       </Fragment>
@@ -272,52 +289,62 @@ export class Pagination extends PluginBaseComponent<
     if (!this.props.enabled) return null;
 
     return (
-      <div
-        className={classJoin(
-          className('pagination'),
-          this.config.className.pagination,
-        )}
-      >
+      <Fragment>
         {this.renderSummary()}
 
-        <div className={className('pages')}>
+        <ul className={classJoin(
+          className('pages'),
+          this.config.className.paginationPages
+        )}>
           {this.props.prevButton && (
-            <button
-              tabIndex={0}
-              role="button"
-              disabled={this.state.page === 0}
-              onClick={this.setPage.bind(this, this.state.page - 1)}
-              title={this._('pagination.previous')}
-              aria-label={this._('pagination.previous')}
-              className={classJoin(
-                this.config.className.paginationButton,
-                this.config.className.paginationButtonPrev,
-              )}
+            <li
+              className={
+                classJoin(
+                  "page-item",
+                  (this.state.page === 0) ? "disabled" : ""
+                )
+              }
             >
-              {this._('pagination.previous')}
-            </button>
+              <a
+                tabIndex={0}
+                aria-disabled={this.state.page === 0}
+                onClick={this.setPage.bind(this, this.state.page - 1)}
+                title={this._('pagination.previous')}
+                aria-label={this._('pagination.previous')}
+                href="javascript:void(0)"
+                className={this.config.className.paginationButton}
+              >
+                {this._('pagination.previous')}
+              </a>
+            </li>
           )}
 
           {this.renderPages()}
 
           {this.props.nextButton && (
-            <button
-              tabIndex={0}
-              role="button"
-              disabled={this.pages === this.state.page + 1 || this.pages === 0}
-              onClick={this.setPage.bind(this, this.state.page + 1)}
-              title={this._('pagination.next')}
-              aria-label={this._('pagination.next')}
-              className={classJoin(
-                this.config.className.paginationButton,
-                this.config.className.paginationButtonNext,
-              )}
+            <li
+              className={
+                classJoin(
+                  "page-item",
+                  (this.pages === this.state.page + 1 || this.pages === 0) ? "disabled" : ""
+                )
+              }
             >
-              {this._('pagination.next')}
-            </button>
+              <a
+                tabIndex={0}
+                aria-disabled={this.pages === this.state.page + 1 || this.pages === 0}
+                onClick={this.setPage.bind(this, this.state.page + 1)}
+                title={this._('pagination.next')}
+                aria-label={this._('pagination.next')}
+                href="javascript:void(0)"
+                className="page-link"
+              >
+                {this._('pagination.next')}
+              </a>
+            </li>
           )}
-        </div>
-      </div>
+        </ul>
+      </Fragment>
     );
   }
 }

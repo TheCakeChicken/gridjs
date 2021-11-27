@@ -72,6 +72,7 @@ export interface Config {
     footer: string;
     header: string;
     search: string;
+    searchInput: string;
     sort: string;
     pagination: string;
     paginationSummary: string;
@@ -79,6 +80,7 @@ export interface Config {
     paginationButtonNext: string;
     paginationButtonCurrent: string;
     paginationButtonPrev: string;
+    paginationPages: string;
     loading: string;
     notfound: string;
     error: string;
